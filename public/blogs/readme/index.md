@@ -8,9 +8,9 @@
 
 ```ts
 export const GITHUB_CONFIG = {
-	OWNER: process.env.NEXT_PUBLIC_GITHUB_OWNER || 'yysuni',
-	REPO: process.env.NEXT_PUBLIC_GITHUB_REPO || '2025-blog-public',
-	BRANCH: process.env.NEXT_PUBLIC_GITHUB_BRANCH || 'main',
+	OWNER: process.env.NEXT_PUBLIC_CONTENT_REPO_OWNER || 'yysuni',
+	REPO: process.env.NEXT_PUBLIC_CONTENT_REPO_NAME || '2025-blog-public',
+	BRANCH: process.env.NEXT_PUBLIC_CONTENT_REPO_BRANCH || 'main',
 	APP_ID: process.env.NEXT_PUBLIC_GITHUB_APP_ID || '-'
 } as const
 ```

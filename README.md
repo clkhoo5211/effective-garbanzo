@@ -1,25 +1,43 @@
-# 2025 Blog
+# ChainBlogger - Two-Repository Blog System
 
 > 最新引导说明：https://www.yysuni.com/blog/readme
 
-该项目使用 Github App 管理项目内容，请保管好后续创建的 **Private key**，不要上传到公开网上。
+该项目使用 Github PAT 管理项目内容，请保管好您的 Personal Access Token，不要上传到公开网上。
+## Two-Repository Setup (Recommended)
 
-## 1. 安装
+This project supports a two-repository setup for enhanced security and separation of concerns:
+
+1. **Public Repository**: `effective-garbanzo` - Hosts the built chainBlogger application via GitHub Pages (distribution files only)
+2. **Private Repository**: `friendly-enigma` - Securely stores all blog post content (markdown files, images, etc.)
+
+To configure this setup, the `.env` file has been pre-configured with your private repository details for blog content storage.
+**Important**: When deploying to GitHub Pages, you should set the PAT as a secret in your public repository settings rather than committing it to version control.
+
+## Manual Deployment Process
+This project is designed for manual deployment where you:
+
+1. Build the project locally with `pnpm build`
+2. Deploy only the built files (from `./out` directory) to your public GitHub Pages repository
+3. Keep your source code private and separate
+
+See `GITHUB_PAGES_DEPLOYMENT.md` for detailed instructions on setting up this deployment process.## 1. 安装
 
 使用该项目可以先不做本地开发，直接部署然后配置环境变量。具体变量名请看下列大写变量
 
 ```ts
 export const GITHUB_CONFIG = {
-	OWNER: process.env.NEXT_PUBLIC_GITHUB_OWNER || 'yysuni',
-	REPO: process.env.NEXT_PUBLIC_GITHUB_REPO || '2025-blog-public',
-	BRANCH: process.env.NEXT_PUBLIC_GITHUB_BRANCH || 'main',
-	APP_ID: process.env.NEXT_PUBLIC_GITHUB_APP_ID || '-'
+	OWNER: process.env.NEXT_PUBLIC_CONTENT_REPO_OWNER || 'yysuni',
+	REPO: process.env.NEXT_PUBLIC_CONTENT_REPO_NAME || '2025-blog-public',
+	BRANCH: process.env.NEXT_PUBLIC_CONTENT_REPO_BRANCH || 'main'
 } as const
 ```
 
-也可以自己手动先调整安装，可自行 `pnpm i`
+**Note**: The actual configuration in your `.env` file is:
+- OWNER: `clkhoo5211`
+- REPO: `friendly-enigma` (your private repository for blog content)
+- BRANCH: `main`
 
-## 2. 部署
+也可以自己手动先调整安装，可自行 `pnpm i`## 2. 部署
 
 我这里熟悉 Vercel 部署，就以 Vercel 部署为例子。创建 Project => Import 这个项目
 
@@ -31,46 +49,31 @@ export const GITHUB_CONFIG = {
 
 大约 60 秒会部署完成，有一个直接 vercel 域名，如：https://2025-blog-public.vercel.app/
 
-到这里部署网站已经完成了，下一步创建 Github App
-
-## 3. 创建 Github App 链接仓库
-
+到这里部署网站已经完成了，下一步创建 Personal Access Token
+## 3. 创建 Personal Access Token 链接仓库
 在 github 个人设置里面，找到最下面的 Developer Settings ，点击进入
 
 ![](https://www.yysuni.com/blogs/readme/0abb3b592cbedad6.png)
 
-进入开发者页面，点击 **New Github App**
+进入开发者页面，点击 **Personal access tokens** 然后选择 **Tokens (classic)**
 
-*GitHub App name* 和 *Homepage URL* , 输入什么都不影响。Webhook 也关闭，不需要。
+点击 **Generate new token (classic)**
+
+给 token 一个描述性的名称，例如 "Blog Content Manager"
+
+确保选中 `repo` 权限范围，这将给予对私有仓库的完整访问权限
 
 ![](https://www.yysuni.com/blogs/readme/71dcd9cf8ec967c0.png)
 
-只需要注意设置一个仓库 write 权限，其它不用。
-
-![](https://www.yysuni.com/blogs/readme/2be290016e56cd34.png)
-
-点击创建，谁能安装这个仓库这个选择无所谓。直接创建。
+点击创建，系统会生成一个新的 Personal Access Token
 
 ![](https://www.yysuni.com/blogs/readme/aa002e6805ab2d65.png)
 
+**重要**：立即复制并保存这个 token，离开页面后将无法再次查看
 
-### 创建密钥
+下一步就是让前端知道使用哪个仓库，就是最开始提到的环境变量。（如果你不会设置环境变量，直接改仓库文件 `src/consts.ts` 也行。因为是公开的，所以环境变量意义也不大）
 
-创建好 Github App 后会提示必须创建一个 **Private Key**，直接创建，会自动下载（不见了也不要紧，后面自己再创建再下载就行）。页面上有个 **App ID** 需要复制一下
-
-再切换到安装页面
-
-![](https://www.yysuni.com/blogs/readme/c122b1585bb7a46a.png)
-
-这里一定要只**授权当前项目**。
-
-![](https://www.yysuni.com/blogs/readme/2cf1cee3b04326f1.png)
-
-点击安装，就完成了 Github App 管理该仓库的权限设置了。下一步就是让前端知道推送那个项目，就是最开始提到的环境变量。（如果你不会设置环境变量，直接改仓库文件 `src/consts.ts` 也行。因为是公开的，所以环境变量意义也不大）
-
-直接输入这几个环境变量值就行，一般只用设置 OWNER 和 APP_ID。其它配置不用管，直接输入创建就行。
-
-![](https://www.yysuni.com/blogs/readme/c5a049d737848abf.png)
+直接输入这几个环境变量值就行，一般只用设置 OWNER。其它配置不用管，直接输入创建就行。![](https://www.yysuni.com/blogs/readme/c5a049d737848abf.png)
 
 设置完成后，需要手动再部署一次，让环境变量生效。
 * 可以直接 push 一次仓库代码会触发部署
@@ -89,9 +92,7 @@ export const GITHUB_CONFIG = {
 
 ## 6. 配置
 
-大部分页面右上角都会有一个编辑按钮，意味着你可以使用 **private key** 进行配置部署。
-
-### 6.1 网站配置
+大部分页面右上角都会有一个编辑按钮，意味着你可以使用 **Personal Access Token** 进行配置部署。### 6.1 网站配置
 
 首页有一个不显眼的配置按钮，点击就能看到现在可以配置的内容。
 

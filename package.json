@@ -1,5 +1,5 @@
 {
-	"name": "2025-blog",
+	"name": "chainblogger",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
@@ -7,7 +7,11 @@
 		"svg": "node scripts/gen-svgs-index.js",
 		"build": "next build --turbopack",
 		"start": "next start",
-		"format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\" \"*.{ts,js,json}\""
+		"format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\" \"*.{ts,js,json}\"",
+		"export": "node scripts/copy-build-for-gh-pages.js",
+		"deploy": "pnpm build && pnpm export",
+		"deploy:gh": "node scripts/deploy-to-gh-pages.js",
+		"prepare:gh": "node scripts/prepare-gh-pages.js"
 	},
 	"dependencies": {
 		"@types/jsrsasign": "^10.5.15",

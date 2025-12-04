@@ -1,4 +1,3 @@
-import { createInstallationToken, getInstallationId, signAppJwt } from './github-client'
 import { GITHUB_CONFIG } from '@/consts'
 import { useAuthStore } from '@/hooks/use-auth'
 import { toast } from 'sonner'
@@ -37,35 +36,47 @@ export function clearAllAuthCache(): void {
 }
 
 export function hasAuth(): boolean {
-	return !!getTokenFromCache()
+	// For PAT authentication, we check if the PAT is available
+	return !!process.env.PERSONAL_ACCESS_TOKEN || !!getTokenFromCache()
 }
 
 /**
- * 统一的认证 Token 获取
- * 自动处理缓存、签发等逻辑
- * @returns GitHub Installation Token
+ * Get GitHub authentication token
+ * Uses Personal Access Token (PAT) for authentication
+ * @returns GitHub Personal Access Token
  */
 export async function getAuthToken(): Promise<string> {
-	// 1. 先尝试从缓存获取 token
+	// 1. First try to get token from cache
 	const cachedToken = getTokenFromCache()
 	if (cachedToken) {
-		toast.info('使用缓存的令牌...')
+		toast.info('Using cached token...')
 		return cachedToken
 	}
 
-	// 2. 获取私钥（从缓存）
-	const privateKey = useAuthStore.getState().privateKey
-	if (!privateKey) {
-		throw new Error('需要先设置私钥。请使用 useAuth().setPrivateKey()')
+	// 2. Use Personal Access Token from environment variables
+	const pat = process.env.PERSONAL_ACCESS_TOKEN
+	if (pat) {
+		toast.info('Using Personal Access Token...')
+		saveTokenToCache(pat)
+		return pat
 	}
 
-	toast.info('正在签发 JWT...')
+	// 3. Fallback to private key authentication (GitHub App)
+	const privateKey = useAuthStore.getState().privateKey
+	if (!privateKey) {
+		throw new Error('No authentication method available. Please set PERSONAL_ACCESS_TOKEN environment variable or use useAuth().setPrivateKey()')
+	}
+
+	// Import GitHub App functions only when needed
+	const { signAppJwt, getInstallationId, createInstallationToken } = await import('./github-client')
+
+	toast.info('Signing JWT...')
 	const jwt = signAppJwt(GITHUB_CONFIG.APP_ID, privateKey)
 
-	toast.info('正在获取安装信息...')
+	toast.info('Getting installation information...')
 	const installationId = await getInstallationId(jwt, GITHUB_CONFIG.OWNER, GITHUB_CONFIG.REPO)
 
-	toast.info('正在创建安装令牌...')
+	toast.info('Creating installation token...')
 	const token = await createInstallationToken(jwt, installationId)
 
 	saveTokenToCache(token)
