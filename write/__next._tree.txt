@@ -1,0 +1,9 @@
+1:"$Sreact.fragment"
+2:I[97367,["/effective-garbanzo/_next/static/chunks/ff1a16fafef87110.js","/effective-garbanzo/_next/static/chunks/926350dec3317ae7.js"],"ViewportBoundary"]
+4:I[97367,["/effective-garbanzo/_next/static/chunks/ff1a16fafef87110.js","/effective-garbanzo/_next/static/chunks/926350dec3317ae7.js"],"MetadataBoundary"]
+5:"$Sreact.suspense"
+:HL["/effective-garbanzo/_next/static/chunks/20964e718f809168.css","style"]
+:HL["https://fonts.googleapis.com/css2?family=Averia+Gruesa+Libre&display=swap","style"]
+0:{"buildId":"aP0R2yj5f_cmU9ICGKd6O","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"write","paramType":null,"paramKey":"write","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"head":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],null]}],"isHeadPartial":false,"staleTime":300}
+3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:[["$","title","0",{"children":"ChainBlogger"}],["$","meta","1",{"name":"description","content":"My personal blog built with ChainBlogger, recording development notes and explorations."}],["$","meta","2",{"property":"og:title","content":"ChainBlogger"}],["$","meta","3",{"property":"og:description","content":"My personal blog built with ChainBlogger, recording development notes and explorations."}],["$","meta","4",{"name":"twitter:card","content":"summary"}],["$","meta","5",{"name":"twitter:title","content":"ChainBlogger"}],["$","meta","6",{"name":"twitter:description","content":"My personal blog built with ChainBlogger, recording development notes and explorations."}]]

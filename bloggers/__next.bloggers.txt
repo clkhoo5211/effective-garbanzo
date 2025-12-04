@@ -1,0 +1,4 @@
+1:"$Sreact.fragment"
+2:I[39756,["/effective-garbanzo/_next/static/chunks/ff1a16fafef87110.js","/effective-garbanzo/_next/static/chunks/926350dec3317ae7.js"],"default"]
+3:I[37457,["/effective-garbanzo/_next/static/chunks/ff1a16fafef87110.js","/effective-garbanzo/_next/static/chunks/926350dec3317ae7.js"],"default"]
+0:{"buildId":"aP0R2yj5f_cmU9ICGKd6O","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
